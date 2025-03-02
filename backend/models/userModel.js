@@ -1,4 +1,11 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
 
-//TODO E PAREI CRIANDO ISSO TAMBÉM, PORQUE PRECISO PARA TERMINAR FUNÇÃO DE CRIAR/REGISTRAR USER
+const User = sequelize.define("User", {
+  name: { type: DataTypes.STRING, allowNull: false },
+  email: { type: DataTypes.STRING, allowNull: false },
+  password: { type: DataTypes.STRING, allowNull: false },
+  createdAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
+})
+
+module.exports = User;

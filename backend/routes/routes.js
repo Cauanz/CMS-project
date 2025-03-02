@@ -1,3 +1,4 @@
+const { registerUser } = require("../controllers/user-controller");
 const router = require("express").Router();
 
 
@@ -5,6 +6,7 @@ const router = require("express").Router();
 
 
 //ROTA REGISTRO
+router.post("/register", registerUser);
 
 //ROTA AUTENTICAÇÃO/LOGIN
 
