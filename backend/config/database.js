@@ -16,6 +16,10 @@ async function connectDB() {
   }
 }
 
+sequelize.sync()
+  .then(() => console.log("Tables created/sync"))
+    .catch((err) => console.log("Error trying to create/sync tables", err))
+
 connectDB();
 
 module.exports = sequelize;

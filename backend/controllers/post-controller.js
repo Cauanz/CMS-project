@@ -3,6 +3,9 @@
 
 
 //FUNÇÃO CRIAR POST
+const createPost = async (req, res) => {
+  
+}
 
 //FUNÇÃO EDITAR POST
 
