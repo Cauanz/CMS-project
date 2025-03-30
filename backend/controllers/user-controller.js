@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/userModel");
+const jwt = require("jsonwebtoken");
 
 //* FUNÇÕES RELACIONADAS AO USUARIO
 
@@ -17,12 +18,13 @@ const registerUser = async (req, res) => {
     //TALVEZ ISSO VIRE UM MIDDLEWARE SEPARADO PARA SER REUTILIZADO
     if(existingUser) {
       res.send({ message: "Usuario cadastrado com este email já existe!" });
+      return;
     }
 
     const newUser = await User.create({ name, email, password: hashedPassword });
-    res.status(201).json("User criado com sucesso!");
+    res.status(201).json({ message: "User criado com sucesso!", user: newUser });
   } catch (error) {
-    res.status(500).json(error)
+    res.status(500).json({ message: "register error", error });
   }
 
 }
@@ -43,13 +45,13 @@ const loginUser = async (req, res) => {
 
     const decryptedPassword = await bcrypt.compare(password, user.password)
       .then(() => {
-        res.status(200).json("Authorized");
+        const token = jwt.sign({time: Date.now()}, process.env.JWT_SECRET);
         //TODO MUDAR ISSO PARA MANDAR ALGO REALMENTE RELEVANTE, O ERROR TAMBÉM
+        res.status(200).json({ message: "Authorized", token });
       })
       .catch((err) => {
         console.log("ERROR", err);
       })
-
   } catch (error) {
     res.status(500).json("An error ocurred trying to login", error);
   }
