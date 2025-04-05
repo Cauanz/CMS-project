@@ -45,7 +45,7 @@ const loginUser = async (req, res) => {
 
     const decryptedPassword = await bcrypt.compare(password, user.password)
       .then(() => {
-        const token = jwt.sign({time: Date.now()}, process.env.JWT_SECRET);
+        const token = jwt.sign({ uid: user.id, time: Date.now() }, process.env.JWT_SECRET);
         //TODO MUDAR ISSO PARA MANDAR ALGO REALMENTE RELEVANTE, O ERROR TAMBÉM
         res.status(200).json({ message: "Authorized", token });
       })
